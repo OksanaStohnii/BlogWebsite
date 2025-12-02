@@ -1,0 +1,26 @@
+{% macro input(name, label, type="", placeholder="")%}
+    <div class="form-floating">
+        <input 
+            class="form-control" 
+            id="{{name}}"
+            type="{{type}}"
+            placeholder="{{ placeholder }}"
+            data-sb-validations="required" />
+        <label for="{{name}}">{{label}}</label>
+        <div class="invalid-feedback" data-sb-feedback="{{name}}:required">A {{name}} is required.</div>
+    </div>
+{%endmacro%}
+
+{% macro textarea(name, label, placeholder) %}
+    <div class="form-floating">
+        <textarea 
+            class="form-control" 
+            id="{{name}}" 
+            placeholder="{{placeholder}}" 
+            style="height: 12rem" 
+            data-sb-validations="required">
+        </textarea>
+        <label for="{{name}}">{{label}}</label>
+        <div class="invalid-feedback" data-sb-feedback="{{name}}:required">A {{name}} is required.</div>
+    </div>
+{% endmacro %}

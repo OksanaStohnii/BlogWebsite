@@ -1,0 +1,74 @@
+{% extends "../_layouts/_adminLayout.njk" %}
+
+{% block head %}
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+    {% set isEdit = (mode == 'edit') %}
+    {% set p = post or {} %}
+
+    <h1 class="h4 mb-4">{% if isEdit %}Edit Post{% else %}Create New Post{% endif %}</h1>
+
+    {% if errors %}
+        <div class="alert alert-danger">
+        <ul class="m-0">{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
+        </div>
+    {% endif %}
+
+    {% if isEdit %}
+        <form method="post" action="/admin/{{ originalSlug }}/edit" class="needs-validation" novalidate>
+    {% else %}
+        <form method="post" action="/admin/new" class="needs-validation" novalidate>
+    {% endif %}
+    {% if isEdit %}
+        <input type="hidden" name="originalSlug" value="{{ originalSlug }}">
+    {% endif %}
+
+    <div class="mb-3">
+        <label class="form-label">Title *</label>
+        <input class="form-control" name="title" value="{{ p.title | default('') }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Image filename *</label>
+        <input class="form-control" name="image" value="{{ p.image | default('') }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Author *</label>
+        <input class="form-control" name="author" value="{{ p.author | default('') }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Teaser *</label>
+        <textarea class="form-control" name="teaser" rows="2" required>{{ p.teaser | default('') }}</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Created at</label>
+        <input class="form-control" name="createdAt" type="number" value="{{ p.createdAt | default('') }}">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Content *</label>
+        <div id="editor" class="form-control" style="min-height:240px;"></div>
+        <input type="hidden" name="content" id="contentInput" required>
+
+        {% if p.content %}
+            <textarea id="initialContent" class="d-none">{{ p.content | safe }}</textarea>
+        {% endif %}
+    </div>
+
+    <div class="d-flex gap-2">
+        <button class="btn btn-primary" type="submit">{% if isEdit %}Save{% else %}Create{% endif %}</button>
+        <a class="btn btn-secondary" href="/admin">Cancel</a>
+    </div>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <script src="../../js/editor.js"></script>
+{% endblock %}

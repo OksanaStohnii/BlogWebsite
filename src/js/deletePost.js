@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.closest("tr").remove();
       } catch (err) {
         alert("Error deleting post. Check console.");
-        console.error(err);
       }
     });
   });

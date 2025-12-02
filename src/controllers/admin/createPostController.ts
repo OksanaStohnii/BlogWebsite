@@ -29,7 +29,7 @@ export function handleCreate(req: Request, res: Response) {
     author,
     teaser,
     content: safeContent,
-    createdAt: createdAt ? Number(createdAt) : Math.floor(Date.now() / 1000),
+    createdAt: Math.floor(Date.now() / 1000),
   };
 
   addPost(post);

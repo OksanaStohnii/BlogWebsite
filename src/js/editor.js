@@ -26,7 +26,7 @@
     document.getElementById('contentInput').value = html;
     if (!html || html === '<p><br></p>') {
       e.preventDefault();
-      alert('Заполни контент поста.');
+      alert('Fill in the post content.');
     }
   });
 })();

@@ -39,9 +39,10 @@ export function handleEdit(req: Request, res: Response) {
   }
 
   const safe = sanitizeContent(content);
-  const unix = createdAt ? Number(createdAt) : Math.floor(Date.now()/1000);
+  const existing = listPosts().find(p => toSlug(p.title) === slug);
+  if (!existing) return res.status(404).send("Not found");
 
-  const updated = { title, image, author, teaser, content: safe, createdAt: unix };
+  const updated = { title, image, author, teaser, content: safe, createdAt: existing.createdAt };
 
   const ok = updateBySlug(slug, updated);
   if (!ok) return res.status(404).send("Not found");
